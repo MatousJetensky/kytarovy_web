@@ -157,24 +157,6 @@ function initHome() {
   }
 }
 
-// --- Diagram akordu (globální, volá se z onclick v tagu) ---
-async function showChordDiagram(chord) {
-  // Najdeme grid kam vykreslit — buď singleChordGrid nebo chordsGrid
-  const grid = document.getElementById('singleChordGrid') || document.getElementById('chordsGrid');
-  if (!grid) return;
-
-  try {
-    const res  = await fetch(`https://api.uberchord.com/v1/chords/${encodeURIComponent(chord)}`);
-    const data = await res.json();
-    if (data && data[0]) {
-      grid.innerHTML = buildChordSVG(chord, data[0]);
-    } else {
-      grid.innerHTML = `<span class="tag">${chord} — diagram nenalezen</span>`;
-    }
-  } catch {
-    grid.innerHTML = `<span class="tag">${chord} — chyba načítání</span>`;
-  }
-}
 
 function buildChordSVG(name, data) {
   const strings = (data.strings || '').split(',').map(s => s.trim());
