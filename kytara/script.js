@@ -158,64 +158,10 @@ function initHome() {
 }
 
 
-function buildChordSVG(name, data) {
-  const strings = (data.strings || '').split(',').map(s => s.trim());
-  const fingers = (data.fingers || '').split(',').map(s => s.trim());
-  const frets   = strings.map(Number);
-
-  const W = 80, H = 90, cols = 6, rows = 5;
-  const padL = 14, padT = 18, padR = 6;
-  const cw = (W - padL - padR) / (cols - 1);
-  const rh = (H - padT - 10) / rows;
-
-  const played   = frets.filter(f => f > 0);
-  const minFret  = played.length ? Math.min(...played) : 1;
-  const startFret = minFret > 1 ? minFret : 1;
-
-  let svg = `<div style="text-align:center;display:inline-block;margin:8px">
-    <div style="font-family:'Cinzel',serif;font-size:0.95rem;color:#e8a030;margin-bottom:6px">${name}</div>
-    <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
-
-  if (startFret > 1) {
-    svg += `<text x="${padL-2}" y="${padT + rh*0.6}" font-size="7" fill="rgba(232,160,48,0.6)" text-anchor="end">${startFret}fr</text>`;
-  }
-
-  for (let r = 0; r <= rows; r++) {
-    const y  = padT + r * rh;
-    const sw = r === 0 ? 2.5 : 0.8;
-    svg += `<line x1="${padL}" y1="${y}" x2="${padL + cw*(cols-1)}" y2="${y}" stroke="rgba(245,237,224,0.5)" stroke-width="${sw}"/>`;
-  }
-  for (let c = 0; c < cols; c++) {
-    const x = padL + c * cw;
-    svg += `<line x1="${x}" y1="${padT}" x2="${x}" y2="${padT + rows*rh}" stroke="rgba(245,237,224,0.4)" stroke-width="0.8"/>`;
-  }
-
-  for (let c = 0; c < cols; c++) {
-    const x = padL + c * cw;
-    const f = frets[c];
-    const fin = fingers[c] || '0';
-
-    if (f === 0) {
-      svg += `<text x="${x}" y="${padT-5}" font-size="7" fill="rgba(245,237,224,0.6)" text-anchor="middle">O</text>`;
-    } else if (isNaN(f) || f < 0) {
-      svg += `<text x="${x}" y="${padT-5}" font-size="7" fill="rgba(232,160,48,0.6)" text-anchor="middle">×</text>`;
-    } else {
-      const row = f - startFret;
-      if (row >= 0 && row < rows) {
-        const cy = padT + row * rh + rh / 2;
-        svg += `<circle cx="${x}" cy="${cy}" r="${cw*0.38}" fill="#e8a030"/>`;
-        if (fin !== '0') svg += `<text x="${x}" y="${cy+2.5}" font-size="6.5" fill="#0a0604" text-anchor="middle" dominant-baseline="middle">${fin}</text>`;
-      }
-    }
-  }
-
-  svg += `</svg></div>`;
-  return svg;
-}
 
 
 // =============================================
-//  CHORDS (= Oblíbené) — zobrazí uložené písně
+//   (= Oblíbené) — zobrazí uložené písně
 // =============================================
 function initFavorites() {
   renderFavoritesList();
