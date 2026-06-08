@@ -8,13 +8,6 @@ const arrowLeft = document.querySelector('.arrow-left');
 const arrowRight = document.querySelector('.arrow-right');
 const content = document.getElementById('page-content');
 
-// Ošetření pro případ že některý prvek neexistuje (např. při testování)
-if (wheel) {
-  wheel.style.transition = 'none';
-  wheel.style.transform = `rotate(${rotation}deg)`;
-  setTimeout(() => { wheel.style.transition = ''; }, 50);
-}
-
 async function loadPage(name) {
   if (!content) return;
   try {
@@ -51,7 +44,7 @@ loadPage(pages[currentIndex]);
 
 
 // =============================================
-//  SDÍLENÉ FUNKCE — oblíbené (localStorage)
+// oblíbené (localStorage)
 // =============================================
 function getFavs() {
   return JSON.parse(localStorage.getItem('mg_favs') || '[]');
@@ -135,30 +128,7 @@ function initHome() {
     updateFavBtn(artist, title);
     extractChords(lyrics);
   }
-
-  // --- Akordy z textu ---
-  function extractChords(lyrics) {
-    const matches = [...lyrics.matchAll(/\[([A-G][#b]?(?:m|maj|min|aug|dim|sus|add)?[0-9]*)\]/g)];
-    const unique  = [...new Set(matches.map(m => m[1]))];
-    if (!unique.length) { chordsCard.style.display = 'none'; return; }
-
-    chordsCard.style.display = 'block';
-    renderChordTags(unique, 'chordsGrid');
-  }
-
-  // --- Ruční akord ---
-  function lookupChord(chord) {
-    if (!chord) return;
-    renderChordTags([chord], 'singleChordGrid');
-  }
-
-  // --- Render tagů akordů (kliknutelné) ---
-  function renderChordTags(chords, gridId) {
-    const grid = document.getElementById(gridId);
-    grid.innerHTML = chords.map(c =>
-      `<span class="tag" style="cursor:pointer" onclick="showChordDiagram('${c}')">${c}</span>`
-    ).join('');
-  }
+  
 
   // --- Oblíbené ---
   function toggleFav() {
