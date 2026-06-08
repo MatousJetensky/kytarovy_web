@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MatysGuitar</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#e8a030" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="MatysGuitar" />
+  <link rel="apple-touch-icon" href="fotky/logo.png" />
+
+  <!-- Fonty -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" href="fotky/logo.png" />
+</head>
+<body>
+
+  <div class="neck-strip" aria-hidden="true"></div>
+
+  <header>
+    <div class="circle-nav" aria-label="Hlavní navigace">
+      <img src="fotky/logo.png" class="logo" alt="MatysGuitar logo" />
+      <img src="fotky/kolo.png" id="wheel" alt="" aria-hidden="true" />
+      <button class="arrow arrow-left">
+        <img src="fotky/sipkaVlevo.png" alt="" />
+      </button>
+      <button class="arrow arrow-right">
+        <img src="fotky/sipkaVpravo.png" alt="" />
+      </button>
+    </div>
+  </header>
+
+  <section id="page-content" class="page-section"></section>
+
+  <script src="script.js"></script>
+  <script src="register-sw.js"></script>
+
+
+</body>
+</html>
